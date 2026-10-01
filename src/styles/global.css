@@ -1,0 +1,28 @@
+/* In the base layer so Tailwind utilities (used by the client-portal pages) can override it. */
+@layer base {
+[hidden] { display: none !important; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--mt-page-bg); }
+body {
+  font-family: var(--mt-font);
+  font-feature-settings: 'cv11', 'ss01';
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--mt-text);
+}
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; color: inherit; }
+
+.code { font-feature-settings: 'cv11', 'ss01', 'tnum'; font-size: 13px; letter-spacing: 0.1px; }
+.tnum { font-feature-settings: 'cv11', 'ss01', 'tnum'; }
+.muted { color: var(--mt-sharkskin); }
+.row { display: flex; gap: 16px; }
+.grow { flex: 1; }
+
+@keyframes mt-pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes mt-flash { from { background: rgba(15, 211, 192, 0.18); } to { background: transparent; } }
+.flash td { animation: mt-flash 1.2s ease-out; }
+}
+
+/* Lists that need their numbers back after Tailwind preflight. */
+.steps, .msg ol, .detail ol { list-style: decimal; }

@@ -1,0 +1,32 @@
+.so-card { overflow: hidden; }
+.so-queues { margin-bottom: 16px; }
+.so-toolbar { flex-wrap: wrap; }
+.so-search { flex: 1 1 240px; max-width: 340px; }
+.so-select { width: auto; min-width: 150px; }
+.so-spacer { flex: 1; }
+.so-scroll { overflow-x: auto; }
+.so-row { cursor: pointer; }
+.so-row:hover td { background: var(--mt-page-bg); }
+.so-row:focus-visible { outline: 2px solid var(--mt-blue); outline-offset: -2px; }
+.so-sort { border: 0; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+.so-empty { text-align: center; color: var(--mt-sharkskin); padding: 32px 20px !important; }
+.so-pager { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-top: 1px solid var(--mt-border); font-size: 13px; }
+.so-pager .btn + .btn { margin-left: 8px; }
+.so-list { list-style: none; font-size: 13px; }
+.so-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--mt-subtle-bg); }
+.so-list li:last-child { border-bottom: 0; }
+.so-link { border: 0; background: none; padding: 0; font: inherit; color: var(--mt-link); cursor: pointer; text-align: left; }
+.so-link:hover { text-decoration: underline; }
+.so-form .form-row .field { height: 36px; }
+.so-form .so-text { height: auto; padding: 8px 10px; resize: vertical; font-family: inherit; line-height: 1.5; }
+.so-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.so-two .form-row { margin-top: 12px; }
+.so-suggest { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px; }
+.so-chip { border: 1px solid var(--mt-border); background: var(--mt-card-bg); color: var(--mt-text); border-radius: var(--mt-radius-control); padding: 2px 8px; font: inherit; font-size: 12px; cursor: pointer; }
+.so-chip:hover { background: var(--mt-page-bg); }
+.so-prev-h { margin-top: 18px; font-size: 13px; font-weight: 600; }
+.so-preview { margin-top: 8px; padding: 12px 14px; border: 1px solid var(--mt-border); border-radius: var(--mt-radius-control); background: var(--mt-page-bg); font-size: 13px; white-space: pre-wrap; }
+.so-inline { display: flex; gap: 8px; margin-top: 12px; }
+.drawer .note-box { margin: 0 0 16px; }
+.so-top, .so-queues { display: flex; width: fit-content; max-width: 100%; overflow-x: auto; }
+.so-top { margin-bottom: 12px; }

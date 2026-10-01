@@ -1,0 +1,94 @@
+/* Mettus design tokens, taken from the Mettus Style Guide (2026-07-06). Use these variables in every module. */
+:root {
+  /* Brand */
+  --mt-blue: #164df2;
+  --mt-blue-hover: #0a2fa8;
+  --mt-blue-mid: #2e7be8;
+  --mt-navy: #122b66;
+  --mt-deep-blue: #1e3a8a;
+
+  /* Neutral and support */
+  --mt-sharkskin: #445e6f;
+  --mt-steel: #91a3b1;
+  --mt-text: #1a2630;
+  --mt-border: #dce3ea;
+
+  /* Semantic */
+  --mt-success: #0f9b6e;
+  --mt-success-bg: #d6ecea;
+  --mt-warning: #c77700;
+  --mt-warning-bg: #f6ecd6;
+  --mt-danger: #c0303a;
+  --mt-danger-bg: #f4dddf;
+
+  /* Surfaces */
+  --mt-page-bg: #f2f5f8;
+  --mt-card-bg: #ffffff;
+  --mt-subtle-bg: #e8ecf1;
+
+  /* Charts */
+  --mt-chart-green: #0fd3c0;
+  --mt-chart-blue: #164df2;
+  --mt-chart-dark-blue: #07247d;
+
+  /* Roles that change with the theme */
+  --mt-link: #164df2;
+  --mt-tint: rgba(22, 77, 242, 0.05);
+  --mt-text-green: #0b7a57;
+  --mt-text-red: #b42831;
+  --mt-text-amber: #955800;
+  --mt-sidebar-bg: #122b66;
+  --mt-topbar-bg: rgba(255, 255, 255, 0.96);
+  --mt-scrim: rgba(10, 31, 68, 0.35);
+
+  /* Gradient */
+  --mt-gradient: linear-gradient(135deg, #164df2 0%, #2e7be8 100%);
+
+  /* Radius */
+  --mt-radius-pill: 8px;
+  --mt-radius-control: 12px;
+  --mt-radius-card: 16px;
+  --mt-radius-panel: 18px;
+
+  /* Shadows */
+  --mt-shadow-card: 0 2px 8px rgba(10, 31, 68, 0.06);
+  --mt-shadow-card-hover: 0 12px 36px rgba(10, 31, 68, 0.14);
+  --mt-shadow-modal: 0 16px 48px rgba(10, 31, 68, 0.25);
+  --mt-shadow-float: 0 6px 20px rgba(22, 77, 242, 0.35);
+
+  /* Motion */
+  --mt-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Type */
+  --font-inter: 'Inter';
+  --mt-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Dark theme. Same attribute, storage key and palette as the client portal (src/cxo/globals.css), so both stay in step. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --mt-text: #edf2f7;
+  --mt-sharkskin: #9fb0bf;
+  --mt-steel: #7f93a5;
+  --mt-border: rgba(255, 255, 255, 0.12);
+  --mt-page-bg: #080f1c;
+  --mt-card-bg: #0f1a2e;
+  --mt-subtle-bg: #16233d;
+
+  --mt-success-bg: rgba(15, 155, 110, 0.18);
+  --mt-warning-bg: rgba(199, 119, 0, 0.2);
+  --mt-danger-bg: rgba(192, 48, 58, 0.22);
+
+  --mt-link: #8fb2ff;
+  --mt-tint: rgba(143, 178, 255, 0.1);
+  --mt-text-green: #3fcf9f;
+  --mt-text-red: #f27a82;
+  --mt-text-amber: #f0aa45;
+  --mt-sidebar-bg: #0b1527;
+  --mt-topbar-bg: rgba(8, 15, 28, 0.92);
+  --mt-scrim: rgba(0, 0, 0, 0.6);
+
+  --mt-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --mt-shadow-card-hover: 0 12px 36px rgba(0, 0, 0, 0.5);
+  --mt-shadow-modal: 0 16px 48px rgba(0, 0, 0, 0.6);
+}

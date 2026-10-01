@@ -1,0 +1,49 @@
+.tk-layout { display: grid; grid-template-columns: 430px minmax(0, 1fr); gap: 20px; align-items: start; }
+
+/* Ticket list */
+.tk-list { overflow: hidden; }
+.tk-list-head { padding: 14px 16px 0; border-bottom: 1px solid var(--mt-border); }
+.tk-list-head .tabs { margin: 0; gap: 0; }
+.tk-list-head .tab { padding: 0 10px 12px; white-space: nowrap; }
+.tk-company { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--mt-border); font-size: 12px; color: var(--mt-sharkskin); }
+.tk-company .field { flex: 1; }
+.tk-list ul { list-style: none; max-height: 640px; overflow-y: auto; }
+.tk-item { display: flex; flex-direction: column; gap: 4px; width: 100%; text-align: left; padding: 12px 16px; border: 0; border-bottom: 1px solid var(--mt-subtle-bg); background: none; cursor: pointer; }
+.tk-item:hover { background: var(--mt-page-bg); }
+.tk-item.on { background: var(--mt-tint); }
+.tk-item-top { display: flex; justify-content: space-between; font-size: 12px; }
+.tk-item-subject { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--mt-text); }
+.tk-item.unread .tk-item-subject { font-weight: 700; }
+.tk-item-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--mt-sharkskin); }
+.unread-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mt-blue); flex: none; }
+.tk-empty { padding: 28px 16px; text-align: center; color: var(--mt-sharkskin); font-size: 13px; }
+
+/* Conversation */
+.tk-thread { display: flex; flex-direction: column; min-height: 560px; }
+.tk-thread-head { display: flex; justify-content: space-between; gap: 16px; padding: 18px 24px; border-bottom: 1px solid var(--mt-border); }
+.tk-thread-head h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; margin: 4px 0; }
+.tk-thread-id, .tk-thread-people { font-size: 13px; color: var(--mt-sharkskin); }
+.tk-thread-actions { display: flex; align-items: flex-start; gap: 8px; flex: none; }
+.tk-messages { flex: 1; overflow-y: auto; max-height: 520px; padding: 8px 24px; }
+.tk-msg { display: flex; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--mt-subtle-bg); }
+.tk-msg:last-child { border-bottom: 0; }
+.tk-avatar { width: 34px; height: 34px; border-radius: 50%; flex: none; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: var(--mt-subtle-bg); color: var(--mt-link); }
+.tk-avatar.agent { background: var(--mt-navy); color: #fff; }
+.tk-msg-body { flex: 1; min-width: 0; }
+.tk-msg-head { display: flex; align-items: baseline; gap: 8px; font-size: 13px; }
+.tk-msg-time { margin-left: auto; font-size: 12px; }
+.tk-msg-body p { margin-top: 4px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
+.tk-msg.mine .tk-msg-body p { color: var(--mt-text); }
+.tk-file { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 4px 10px; border: 1px solid var(--mt-border); border-radius: 8px; background: var(--mt-card-bg); font-size: 12px; font-weight: 500; color: var(--mt-text); cursor: pointer; }
+.tk-file:hover { background: var(--mt-page-bg); }
+.tk-file.static { margin-top: 0; cursor: default; }
+.tk-compose { padding: 16px 24px 20px; border-top: 1px solid var(--mt-border); background: var(--mt-page-bg); border-radius: 0 0 var(--mt-radius-card) var(--mt-radius-card); }
+.tk-compose textarea { width: 100%; height: auto; padding: 10px 12px; font: inherit; font-size: 14px; line-height: 1.5; resize: vertical; }
+.tk-compose-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+.tk-compose-left { display: flex; align-items: center; gap: 10px; }
+.tk-closed { padding: 18px 24px; border-top: 1px solid var(--mt-border); color: var(--mt-sharkskin); font-size: 13px; }
+.tk-none { align-items: center; justify-content: center; color: var(--mt-sharkskin); }
+.nt-grid { display: grid; grid-template-columns: 1fr 140px; gap: 12px; margin-top: 12px; }
+.nt-grid .form-row + .form-row { margin-top: 0; }
+.nt-area { height: auto !important; padding: 8px 10px; font: inherit; resize: vertical; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

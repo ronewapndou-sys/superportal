@@ -1,0 +1,36 @@
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; overflow: visible; }
+.chart-grid { stroke: var(--mt-subtle-bg); stroke-width: 1; }
+.chart-tick { fill: var(--mt-sharkskin); font-size: 11px; font-feature-settings: 'tnum'; }
+.chart-cross { stroke: var(--mt-steel); stroke-width: 1; }
+.chart-band { fill: transparent; }
+.chart-band.on { fill: var(--mt-page-bg); }
+.chart-tip { position: absolute; z-index: 5; min-width: 130px; pointer-events: none; background: var(--mt-card-bg); border: 1px solid var(--mt-border); border-radius: var(--mt-radius-control); box-shadow: var(--mt-shadow-card-hover); padding: 8px 12px; font-size: 12px; color: var(--mt-text); }
+.chart-tip-title { font-weight: 600; margin-bottom: 2px; color: var(--mt-sharkskin); }
+.chart-tip-row { display: flex; align-items: center; gap: 8px; }
+.chart-tip-row strong { margin-left: auto; font-feature-settings: 'tnum'; }
+.chart-tip-row i, .chart-legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.chart-legend { display: flex; gap: 16px; font-size: 12px; color: var(--mt-sharkskin); margin-bottom: 8px; }
+.chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chart-legend.small { margin: 10px 0 0; gap: 14px; font-size: 11px; }
+.sparkline { display: block; }
+
+.barlist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.barlist li { display: grid; grid-template-columns: 170px 1fr; align-items: center; gap: 12px; font-size: 13px; }
+.barlist-label { color: var(--mt-text); }
+.barlist-track { display: flex; align-items: center; gap: 8px; }
+.barlist-bar { height: 10px; min-width: 4px; background: var(--mt-chart-blue); border-radius: 0 4px 4px 0; }
+.barlist-value { font-weight: 600; font-feature-settings: 'tnum'; color: var(--mt-text); }
+
+.uptime { display: flex; gap: 2px; height: 32px; }
+.uptime-day { flex: 1; border-radius: 3px; }
+.uptime-day.operational, .uptime-key.operational { background: var(--mt-success); }
+.uptime-day.degraded, .uptime-key.degraded { background: var(--mt-warning); }
+.uptime-day.outage, .uptime-key.outage { background: var(--mt-danger); }
+.uptime-day.maintenance, .uptime-key.maintenance { background: var(--mt-steel); }
+.uptime-axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--mt-sharkskin); margin-top: 4px; }
+
+.table-toggle { margin-top: 10px; }
+.table-toggle-wrap { margin-top: 10px; max-height: 240px; overflow: auto; border: 1px solid var(--mt-border); border-radius: var(--mt-radius-control); }
+.link-btn { border: 0; background: none; padding: 0; color: var(--mt-link); font-size: 13px; font-weight: 600; cursor: pointer; }
+.link-btn:hover { text-decoration: underline; }

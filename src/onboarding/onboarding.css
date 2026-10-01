@@ -1,0 +1,27 @@
+
+.ob-narrow { max-width: 760px; margin: 0 auto; }
+.ob-card { padding: 24px 28px 20px; }
+.ob-card h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 16px; }
+.ob-card .form-row { margin-top: 16px; }
+.ob-card .form-row .field { width: 100%; height: 40px; font-size: 14px; }
+.ob-help { display: block; margin-top: 4px; font-size: 12px; color: var(--mt-sharkskin); }
+.ob-err { display: block; margin-top: 4px; font-size: 12px; font-weight: 500; color: var(--mt-text-red); }
+.ob-fieldset { border: 0; padding: 0; margin: 20px 0 0; display: flex; flex-wrap: wrap; gap: 4px 24px; }
+.ob-fieldset legend { font-size: 13px; font-weight: 500; margin-bottom: 6px; width: 100%; }
+.ob-np { margin-top: 14px; }
+.ob-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ob-h3 { font-size: 15px; font-weight: 600; margin: 24px 0 4px; }
+.ob-docs { list-style: none; }
+.ob-docs li { display: flex; align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--mt-subtle-bg); }
+.ob-actions { display: flex; align-items: center; gap: 8px; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--mt-border); }
+.ob-steps { list-style: none; display: flex; gap: 8px; margin-bottom: 20px; }
+.ob-steps li { flex: 1; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--mt-radius-control); background: var(--mt-card-bg); border: 1px solid var(--mt-border); font-size: 13px; color: var(--mt-sharkskin); }
+.ob-steps li.on { color: var(--mt-text); font-weight: 600; border-color: var(--mt-blue); }
+.ob-dot { width: 22px; height: 22px; border-radius: 50%; background: var(--mt-subtle-bg); color: var(--mt-sharkskin); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex: none; }
+.ob-steps li.on .ob-dot { background: var(--mt-blue); color: #fff; }
+.ob-steps li.done .ob-dot { background: var(--mt-navy); color: #fff; }
+.ob-review { display: grid; grid-template-columns: 110px 1fr; gap: 14px 16px; font-size: 14px; margin-top: 8px; }
+.ob-review dt { color: var(--mt-sharkskin); }
+.ob-done { text-align: left; }
+.ob-done h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+.ob-done p + p { margin-top: 10px; }

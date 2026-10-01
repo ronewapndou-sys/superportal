@@ -1,0 +1,10 @@
+node_modules
+dist
+*.local
+
+# Legacy/reference material, not part of the deployed app
+Mettus-Client-Portal/
+xds-portal/
+static-wireframe/
+mettus-eftsure-portal (1).html
+tsconfig.tsbuildinfo

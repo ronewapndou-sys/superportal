@@ -1,0 +1,5 @@
+.mt-loading { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; background: var(--mt-page-bg, #f2f5f8); color: var(--mt-sharkskin, #445e6f); font-family: var(--mt-font, 'Inter', system-ui, sans-serif); font-size: 14px; }
+.mt-loading p { margin: 0; letter-spacing: 0.1px; }
+.mt-loader-bar { transform-box: fill-box; transform-origin: center; animation: mt-loader-wave 1.5s ease-in-out infinite; }
+@keyframes mt-loader-wave { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.38); } }
+@media (prefers-reduced-motion: reduce) { .mt-loader-bar { animation: none; } }

@@ -1,0 +1,12 @@
+.attention-card { margin-top: 28px; }
+.attention { list-style: none; }
+.attention li { display: flex; align-items: center; gap: 14px; padding: 11px 20px; border-bottom: 1px solid var(--mt-subtle-bg); font-size: 14px; }
+.attention li:last-child { border-bottom: 0; }
+.attention .pill { width: 132px; justify-content: center; }
+
+.section-title { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 14px; }
+.service-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.service-card { display: flex; flex-direction: column; gap: 4px; padding: 18px 20px; }
+.service-card .btn { align-self: flex-start; margin-top: 12px; }
+.service-section { font-size: 12px; color: var(--mt-sharkskin); }
+a.btn { text-decoration: none; }

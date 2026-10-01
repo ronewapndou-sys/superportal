@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+/*
+ * Mettus client portal design tokens.
+ * Source of truth: "Mettus Style Guide_20260706" (colours, Inter-only type,
+ * radii, shadows, motion). Everything the style guide is silent on — dark
+ * mode, focus, contrast, state patterns — follows ~/Desktop/UI-DESIGN-GUIDELINES.md.
+ *
+ * Theme: light is the default; [data-theme="dark"] on <html> (set before
+ * hydration by the theme-init script in layout.tsx) overrides.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  /* ---- Mettus brand (identical in both themes) ---- */
+  --brand-blue: #164df2;       /* Mettus Blue — primary action */
+  --brand-blue-deep: #0a2fa8;  /* primary hover, Credit hero start */
+  --brand-mid: #2e7be8;        /* Blue Mid */
+  --brand-navy: #122b66;       /* Navy — navbar */
+  --brand-deep: #1e3a8a;       /* Deep Blue */
+  --brand-ink-blue: #0a1f44;   /* Risk hero start, shadow base */
+  --chart-green: #0fd3c0;      /* charts + live dots only — accent, never a surface */
+  --chart-blue: #164df2;
+  --chart-dark: #07247d;
+  --accent-gold: #f0aa45;     /* sparing accent — attention dots on navy chrome only */
+
+  /* ---- semantic, light theme ---- */
+  --background: #f2f5f8;   /* Page BG */
+  --foreground: #1a2630;   /* Text Primary */
+  --surface: #ffffff;      /* Card BG */
+  --surface-2: #e8ecf1;    /* Subtle BG */
+  --line: #dce3ea;         /* Border */
+  /* form-control borders — darker than --line so fields stand out from dividers (≥3:1) */
+  --field-line: #7d91a1;
+  --muted: #445e6f;        /* Sharkskin — 6.6:1 on white */
+  --steel: #91a3b1;        /* Steel — decorative only, never text */
+  --kw: #07247d;           /* suite keyword highlight */
+
+  --success: #0f9b6e;
+  --success-bg: #d6ecea;
+  --warning: #9a5c00;      /* guide's #C77700 darkened to clear 4.5:1 as text */
+  --warning-bg: #f6ecd6;
+  --danger: #c0303a;
+  --danger-bg: #f4dddf;
+
+  --shadow-tint: 10, 31, 68;
+}
+
+[data-theme="dark"] {
+  /* navy-black, not grey — hand-picked, not inverted */
+  --background: #080f1c;
+  --foreground: #edf2f7;
+  --surface: #0f1a2e;
+  --surface-2: #16233d;
+  --line: rgba(255, 255, 255, 0.09);
+  --field-line: rgba(255, 255, 255, 0.32);
+  --muted: #9fb0bf;
+  --steel: #5d7285;
+  --kw: #8fb2ff;
+  --chart-dark: #8fb2ff;     /* #07247D disappears on navy-black — lifted for dark only */
+
+  --success: #3fcf9f;
+  --success-bg: rgba(15, 155, 110, 0.18);
+  --warning: #f0aa45;
+  --warning-bg: rgba(199, 119, 0, 0.2);
+  --danger: #f27a82;
+  --danger-bg: rgba(192, 48, 58, 0.22);
+
+  --shadow-tint: 0, 0, 0;
+}
+
+@media (prefers-contrast: more) {
+  :root { --muted: #2f4555; --line: #b9c6d2; --field-line: #445e6f; }
+  [data-theme="dark"] { --muted: #c9d4de; --line: rgba(255, 255, 255, 0.22); }
+}
+
+@theme inline {
+  --color-brand: var(--brand-blue);
+  --color-brand-deep: var(--brand-blue-deep);
+  --color-brand-mid: var(--brand-mid);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-dark: var(--brand-deep);
+  --color-brand-ink: var(--brand-ink-blue);
+  --color-chart-green: var(--chart-green);
+  --color-chart-blue: var(--chart-blue);
+  --color-chart-dark: var(--chart-dark);
+  --color-accent-gold: var(--accent-gold);
+  --color-ink: var(--foreground);
+  --color-muted: var(--muted);
+  --color-steel: var(--steel);
+  --color-kw: var(--kw);
+  --color-line: var(--line);
+  --color-field-line: var(--field-line);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+
+  --font-sans: var(--font-inter);
+
+  /* Mettus type scale */
+  --text-hero: 34px;
+  --text-hero--line-height: 1.15;
+  --text-title: 30px;
+  --text-title--line-height: 1.2;
+  --text-section: 20px;
+  --text-section--line-height: 1.3;
+  --text-metric: 30px;
+  --text-metric--line-height: 1.1;
+  --text-label: 11px;
+  --text-label--line-height: 1.3;
+
+  /* Mettus shadows */
+  --shadow-card: 0 2px 8px rgba(var(--shadow-tint), 0.06);
+  --shadow-card-hover: 0 12px 36px rgba(var(--shadow-tint), 0.14);
+  --shadow-modal: 0 16px 48px rgba(var(--shadow-tint), 0.25);
+  --shadow-fab: 0 6px 20px rgba(22, 77, 242, 0.35);
+
+  --ease-mettus: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+html {
+  /* always reserve the scrollbar so modals opening doesn't shift the navbar */
+  scrollbar-gutter: stable;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  /* tnum is applied per-element via `tabular-nums` — globally it widens hyphens and dashes */
+  font-feature-settings: "cv11", "ss01";
+  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
+}
+
+/* Soft ambient glow behind every screen, in Mettus blues. Gentler in light
+   mode so text contrast is untouched. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 160% 160%, 160% 160%;
+  background-image:
+    radial-gradient(55% 48% at 85% 6%, rgba(22, 77, 242, 0.07), transparent 70%),
+    radial-gradient(65% 55% at 12% 105%, rgba(46, 123, 232, 0.06), transparent 70%);
+}
+
+[data-theme="dark"] body::before {
+  background-image:
+    radial-gradient(55% 48% at 85% 6%, rgba(22, 77, 242, 0.2), transparent 70%),
+    radial-gradient(65% 55% at 12% 105%, rgba(46, 123, 232, 0.14), transparent 70%);
+}
+
+
+
+/* ---------- Mettus gradients (named, so they keep their meaning) ---------- */
+.mettus-gradient { background-image: linear-gradient(135deg, #164df2 0%, #2e7be8 100%); }
+.hero-credit { background-image: linear-gradient(135deg, #0a2fa8, #164df2); }
+.hero-risk { background-image: linear-gradient(135deg, #0a1f44, #1e3a8a); }
+.hero-associate { background-image: linear-gradient(135deg, #164df2, #2e7be8); }
+.hero-monitor { background-image: linear-gradient(135deg, #1e3a8a, #2e7be8); }
+.success-banner { background-image: linear-gradient(135deg, var(--success-bg), rgba(15, 155, 110, 0.05)); }
+
+/* Suite keyword highlight — dark-blue accent per the style guide */
+.kw { color: var(--kw); font-weight: 600; }
+
+/* Card hover lift — Mettus 200ms curve */
+.card-lift {
+  transition: transform 200ms var(--ease-mettus), box-shadow 200ms var(--ease-mettus), border-color 200ms var(--ease-mettus);
+}
+.card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--shadow-tint), 0.1);
+}
+
+/* Gentle rise-in played whenever a page mounts on navigation */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+/* `backwards`, not `both`: a fill-forwards transform would stay on the wrapper for good and make it the containing block for every position:fixed dialog and drawer inside, pushing them off-screen. */
+.page-enter { animation: page-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.pop-in { animation: pop-in 0.2s var(--ease-mettus) both; }
+
+
+/* Consistent, visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--brand-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* on navy / gradient chrome the blue ring disappears — use white */
+.on-brand :focus-visible { outline-color: #ffffff; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .card-lift:hover { transform: none; }
+}
+
+/* ---------- Portal Admin (the XDS admin portal, src/admin) ---------- */
+@theme inline {
+  --color-page: var(--background);
+  --color-subtle: var(--surface-2);
+  --color-sharkskin: var(--muted);
+  --color-mettus: var(--brand-blue);
+  --color-mettus-hover: var(--brand-blue-deep);
+  --color-navy: var(--brand-navy);
+  --radius-badge: 10px;
+  --radius-ctl: 12px;
+  --radius-card: 16px;
+  --radius-hero: 20px;
+}
+.bg-mettus-gradient { background-image: linear-gradient(135deg, #164df2 0%, #2e7be8 100%); }
+.xa h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+.xa h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+.xa-btn, .xa-btn-primary, .xa-btn-default, .xa-btn-danger { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: transform 150ms, box-shadow 150ms, background 150ms; }
+.xa-btn-primary { background: var(--brand-blue); color: #fff; }
+.xa-btn-primary:hover { background: var(--brand-blue-deep); }
+.xa-btn-default { border: 1px solid var(--line); background: var(--surface); color: var(--foreground); }
+.xa-btn-default:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(var(--shadow-tint), 0.1); }
+.xa-btn-danger { background: var(--danger); color: #fff; }
+.xa-btn-danger:hover { filter: brightness(0.9); }
+.xa-btn-primary:disabled, .xa-btn-default:disabled, .xa-btn-danger:disabled { opacity: 0.55; cursor: default; transform: none; box-shadow: none; }
+.xa-label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 500; color: var(--foreground); }
+.xa-input { width: 100%; border-radius: 12px; border: 1px solid var(--field-line); background: var(--surface); padding: 9px 14px; font-size: 14px; color: var(--foreground); }
+.xa-input::placeholder { color: var(--steel); }
+.xa-input:focus { outline: 2px solid var(--brand-blue); outline-offset: 1px; }
+.xa-badge { display: inline-flex; align-items: center; border-radius: 10px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
