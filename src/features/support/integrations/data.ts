@@ -31,6 +31,14 @@ export const INITIAL_INTEGRATIONS: Integration[] = [
   { id: 'crm', initials: 'CR', name: 'CRM system', purpose: 'Attach enquiry results and support cases to client records', status: 'not-connected', lastActivity: 'Never' },
 ];
 
+export const INITIAL_INTEGRATIONS_MIE: Integration[] = [
+  { id: 'mie-connect-prod', initials: 'MC', name: 'MIE Verification API Production', purpose: 'Live verification requests from your systems through the REST API', status: 'connected', lastActivity: 'Today, 09:40' },
+  { id: 'mie-connect-uat', initials: 'MU', name: 'MIE Verification API Sandbox', purpose: 'Test your integration before going live', status: 'connected', lastActivity: 'Today, 08:15' },
+  { id: 'mie-webhooks', initials: 'WH', name: 'Verification webhooks', purpose: 'Get notified the moment a document or address verification result is ready', status: 'attention', lastActivity: 'Yesterday, 21:05', issue: 'Verification webhooks are failing because your endpoint returned 503' },
+  { id: 'sso', initials: 'ID', name: 'Single sign-on', purpose: 'Let your staff sign in to this portal with your identity provider', status: 'not-connected', lastActivity: 'Never' },
+  { id: 'crm', initials: 'CR', name: 'CRM system', purpose: 'Attach verification results and support cases to client records', status: 'not-connected', lastActivity: 'Never' },
+];
+
 /** Systems offered in the "Add integration" dialog. */
 export const CATALOGUE = [
   { id: 'dw', initials: 'DW', name: 'Data warehouse', purpose: 'Export daily enquiry and billing data to your warehouse' },

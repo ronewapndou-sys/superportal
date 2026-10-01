@@ -20,6 +20,12 @@ export const INITIAL_USERS: ApiUser[] = [
   { id: 'u4', username: 'svc_collections_old', environment: 'Production', products: 'Consumer Trace', status: { tone: 'red', label: 'Locked' }, lastLogin: '12 Sep 2026', locked: true },
 ];
 
+export const INITIAL_USERS_MIE: ApiUser[] = [
+  { id: 'm1', username: 'svc_onboarding_mie', environment: 'Production', products: 'Document Verification', status: { tone: 'green', label: 'Active' }, lastLogin: 'Today, 09:40' },
+  { id: 'm2', username: 'svc_screening_mie', environment: 'Production', products: 'Address Verification, Employment Verification', status: { tone: 'green', label: 'Active' }, lastLogin: 'Today, 08:55' },
+  { id: 'm3', username: 'uat_mie_integration', environment: 'UAT', products: 'Document Verification, Address Verification', status: { tone: 'green', label: 'Active' }, lastLogin: '28 Sep 2026' },
+];
+
 export type ProductAccess = { name: string; productId: number; area: string; tone: PillTone; label: string };
 
 /**
@@ -32,6 +38,13 @@ export const INITIAL_PRODUCTS: ProductAccess[] = [
   { name: 'Realtime IDV', productId: 153, area: 'Identity', tone: 'green', label: 'Production and UAT' },
   { name: 'Consumer Trace', productId: 2, area: 'Tracing', tone: 'green', label: 'Production and UAT' },
   { name: 'Business Enquiry', productId: 12, area: 'Commercial', tone: 'amber', label: 'UAT only' },
+];
+
+/** This client's MIE products (chosen during onboarding). IDs are from the MIE product list. */
+export const INITIAL_PRODUCTS_MIE: ProductAccess[] = [
+  { name: 'Document Verification', productId: 401, area: 'Identity', tone: 'green', label: 'Production and UAT' },
+  { name: 'Address Verification', productId: 404, area: 'Identity', tone: 'green', label: 'Production and UAT' },
+  { name: 'Employment Verification', productId: 412, area: 'Screening', tone: 'amber', label: 'UAT only' },
 ];
 
 const pick = (chars: string, n: number) => Array.from({ length: n }, () => chars[Math.floor(Math.random() * chars.length)]).join('');

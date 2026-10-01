@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useBusiness } from '@/lib/business';
 import { useAuth } from '../../auth/AuthContext';
 import { useTickets } from '../../tickets/TicketsContext';
 import { Pill } from '../../ui';
@@ -10,12 +11,19 @@ const PLATFORM_ATTENTION = [
   { tone: 'red' as const, label: 'At risk', text: 'Vantage Telecom: 7.8% of calls failed in the last 24 hours', to: '/monitoring/platform' },
 ];
 
-const CLIENT_ATTENTION = [
+const CLIENT_ATTENTION_XDS = [
   { tone: 'red' as const, label: 'Error', text: 'Monitoring triggers are failing: your endpoint returned 503', to: '/support/integrations' },
   { tone: 'amber' as const, label: 'Needs attention', text: 'XDS Connect UAT refused calls from a new server address', to: '/support/integrations' },
   { tone: 'amber' as const, label: 'Degraded', text: 'Realtime IDV is slow at Mettus (INC-2291)', to: '/monitoring' },
   { tone: 'red' as const, label: 'Locked', text: 'API user svc_collections_old is locked', to: '/support/api' },
   { tone: 'amber' as const, label: 'Expiring', text: "svc_onboarding_prod's password expires in 5 days", to: '/support/api' },
+];
+
+const CLIENT_ATTENTION_MIE = [
+  { tone: 'red' as const, label: 'Error', text: 'Verification webhooks are failing: your endpoint returned 503', to: '/support/integrations' },
+  { tone: 'amber' as const, label: 'Needs follow-up', text: '7 document verifications came back as a mismatch this morning', to: '/support/activity' },
+  { tone: 'grey' as const, label: 'Maintenance', text: 'MIE client portal is in planned maintenance', to: '/monitoring' },
+  { tone: 'amber' as const, label: 'Expiring', text: "svc_onboarding_mie's session renews less often than recommended", to: '/support/api' },
 ];
 
 /** Shown at the top of Home when someone was sent back from a page their account doesn't include. */
@@ -37,6 +45,7 @@ export function AccessDeniedBanner() {
 export function AttentionCard({ flush = false }: { flush?: boolean }) {
   const { can } = useAuth();
   const { tickets, audience } = useTickets();
+  const business = useBusiness();
   const ticketItems = tickets
     .filter((t) => (audience === 'agent' ? t.status === 'open' : t.status === 'waiting-client'))
     .map((t) => ({
@@ -45,7 +54,8 @@ export function AttentionCard({ flush = false }: { flush?: boolean }) {
       text: `${t.id}: ${t.subject}`,
       to: `${audience === 'agent' ? '/support/desk' : '/support/tickets'}?id=${t.id}`,
     }));
-  const attention = [...ticketItems, ...(can('platform-health') ? PLATFORM_ATTENTION : can('support') ? CLIENT_ATTENTION : [])];
+  const clientAttention = business === 'mie' ? CLIENT_ATTENTION_MIE : CLIENT_ATTENTION_XDS;
+  const attention = [...ticketItems, ...(can('platform-health') ? PLATFORM_ATTENTION : can('support') ? clientAttention : [])];
 
   if (attention.length === 0) return null;
   return (

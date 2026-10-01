@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useBusiness } from '@/lib/business';
 import { useChat } from '../../../chat';
 import { PageHeader } from '../../../shell/PageHeader';
 import { CloseIcon, Pill, copyText, useToast } from '../../../ui';
-import { EVENTS, PRODUCTS, TOTAL_EVENTS, type ActivityEvent, type EventGroup } from './data';
+import { EVENTS, EVENTS_MIE, PRODUCTS, PRODUCTS_MIE, TOTAL_EVENTS, TOTAL_EVENTS_MIE, type ActivityEvent, type EventGroup } from './data';
 import '../support.css';
 
 const productLabel = (e: ActivityEvent) => (e.productId ? `${e.product} · ${e.productId}` : e.product);
@@ -17,7 +18,7 @@ function downloadCsv(rows: ActivityEvent[]) {
   URL.revokeObjectURL(a.href);
 }
 
-function EventDrawer({ event, onClose }: { event: ActivityEvent; onClose: () => void }) {
+function EventDrawer({ event, onClose, signInLabel }: { event: ActivityEvent; onClose: () => void; signInLabel: string }) {
   const toast = useToast();
   const chat = useChat();
 
@@ -89,7 +90,7 @@ function EventDrawer({ event, onClose }: { event: ActivityEvent; onClose: () => 
           onClick={() =>
             chat.startTicket({
               subject: `${event.title}: ${event.method}`,
-              area: event.product === 'Sign-in' ? 'XDS Connect sign-in and tickets' : event.product,
+              area: event.product === 'Sign-in' ? signInLabel : event.product,
               attached: event.ref !== 'None' ? event.ref : `${event.method} at ${event.time}`,
             })
           }
@@ -106,25 +107,35 @@ function EventDrawer({ event, onClose }: { event: ActivityEvent; onClose: () => 
 
 export function ActivityPage() {
   const toast = useToast();
+  const business = useBusiness();
+  const isMie = business === 'mie';
+  const events = isMie ? EVENTS_MIE : EVENTS;
+  const products = isMie ? PRODUCTS_MIE : PRODUCTS;
+  const totalEvents = isMie ? TOTAL_EVENTS_MIE : TOTAL_EVENTS;
+  const connectName = isMie ? 'the MIE Verification API' : 'XDS Connect';
+  const signInLabel = isMie ? 'MIE sign-in and sessions' : 'XDS Connect sign-in and tickets';
   const [selected, setSelected] = useState<ActivityEvent | null>(null);
   const [group, setGroup] = useState<EventGroup | ''>('');
   const [product, setProduct] = useState('');
   const [search, setSearch] = useState('');
 
+  // Switching XDS/MIE in the top bar should clear filters and the open event from the other business.
+  useEffect(() => { setSelected(null); setGroup(''); setProduct(''); setSearch(''); }, [business]);
+
   const filtering = Boolean(group || product || search.trim());
   const visible = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return EVENTS.filter(
+    return events.filter(
       (e) => (!group || e.group === group) && (!product || e.product === product) && (!q || [e.time, e.user, e.method, e.product, e.productId, e.ref, e.status].join(' ').toLowerCase().includes(q)),
     );
-  }, [group, product, search]);
-  const failures = EVENTS.filter((e) => e.group === 'failed').length;
+  }, [events, group, product, search]);
+  const failures = events.filter((e) => e.group === 'failed').length;
 
   return (
     <>
       <PageHeader
         title="Activity log"
-        description="Calls your systems made to XDS Connect. Select one to see what happened and how to fix it."
+        description={`Calls your systems made to ${connectName}. Select one to see what happened and how to fix it.`}
         actions={
           <button className="btn" type="button" onClick={() => { downloadCsv(visible); toast(`Exported ${visible.length} calls to activity-log.csv.`); }}>
             Export CSV
@@ -146,7 +157,7 @@ export function ActivityPage() {
           </select>
           <select className="field" aria-label="Product" value={product} onChange={(e) => setProduct(e.target.value)}>
             <option value="">All products</option>
-            {PRODUCTS.map((p) => <option key={p}>{p}</option>)}
+            {products.map((p) => <option key={p}>{p}</option>)}
           </select>
           <select className="field" aria-label="Date range" onChange={(e) => toast(`Showing ${e.target.value.toLowerCase()}.`)}>
             <option>Last 24 hours</option>
@@ -189,7 +200,7 @@ export function ActivityPage() {
           </tbody>
         </table>
         <div className="pager">
-          <span>{filtering ? `${visible.length} matching call${visible.length === 1 ? '' : 's'}` : `Showing 1 to ${EVENTS.length} of ${TOTAL_EVENTS.toLocaleString('en-US')} calls`} · times in SAST</span>
+          <span>{filtering ? `${visible.length} matching call${visible.length === 1 ? '' : 's'}` : `Showing 1 to ${events.length} of ${totalEvents.toLocaleString('en-US')} calls`} · times in SAST</span>
           <div className="pager-btns">
             <button className="btn" type="button" disabled>Previous</button>
             <button className="btn" type="button" disabled={filtering} onClick={() => toast('You are viewing the latest calls. Use Export CSV for the full list.')}>Next</button>
@@ -197,7 +208,7 @@ export function ActivityPage() {
         </div>
       </section>
 
-      {selected && <EventDrawer event={selected} onClose={() => setSelected(null)} />}
+      {selected && <EventDrawer event={selected} onClose={() => setSelected(null)} signInLabel={signInLabel} />}
     </>
   );
 }

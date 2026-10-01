@@ -81,3 +81,51 @@ export const EVENTS: ActivityEvent[] = [
 
 export const TOTAL_EVENTS = 3218;
 export const PRODUCTS = ['Credit Enquiry', 'DOVS'];
+
+// Sample events for MIE. Method names follow the MIE Verification API's REST shape; the values are made up.
+export const EVENTS_MIE: ActivityEvent[] = [
+  {
+    time: '30 Sep 09:41:03', user: 'svc_onboarding_mie', method: 'POST /v2/verify/document', product: 'Document Verification', productId: 401, ref: 'ONB-8820',
+    tone: 'green', status: 'Success', group: 'success', title: 'Document verified',
+    what: 'The ID document matched the claimed identity with a match score of 0.97, and no signs of tampering were found.',
+    steps: ['No action needed.'],
+    request: '{\n  "documentImage": "<base64>",\n  "idNumber": "•••••••••0082"\n}',
+  },
+  {
+    time: '30 Sep 09:38:47', user: 'svc_screening_mie', method: 'POST /v2/verify/address', product: 'Address Verification', productId: 404, ref: 'SCR-5541',
+    tone: 'red', status: 'Failed', group: 'failed', title: 'Session token expired',
+    what: 'The session token sent with this call had expired. Session tokens from POST /v2/sessions are valid for 12 hours, and this one was issued at 21:30 the previous day.',
+    steps: ['Call POST /v2/sessions again to get a new session token.', 'Check the token with GET /v2/sessions/current before you start a batch of calls.', "Don't store session tokens for longer than 12 hours."],
+    request: '{\n  "idNumber": "•••••••••0145",\n  "address": "•••••••••••••••"\n}',
+  },
+  {
+    time: '30 Sep 09:30:12', user: 'svc_onboarding_mie', method: 'POST /v2/verify/document', product: 'Document Verification', productId: 401, ref: 'ONB-8815',
+    tone: 'amber', status: 'Mismatch', group: 'warning', title: 'Document mismatch',
+    what: "The photo on the ID document did not match the selfie submitted (match score 0.41, below the 0.80 threshold).",
+    steps: ['Ask the consumer to resubmit clearer photos in good light.', 'If it fails again, verify the consumer another way.'],
+    request: '{\n  "documentImage": "<base64>",\n  "selfieImage": "<base64>",\n  "idNumber": "•••••••••0391"\n}',
+  },
+  {
+    time: '30 Sep 09:12:55', user: 'svc_screening_mie', method: 'POST /v2/verify/employment', product: 'Employment Verification', productId: 412, ref: 'SCR-5538',
+    tone: 'amber', status: 'No match', group: 'warning', title: 'No consumer found',
+    what: 'No record matched the ID number and employer name sent.',
+    steps: ['Confirm the ID number is correct.', 'Try the employer\'s registered trading name instead of a shortened name.'],
+    request: '{\n  "idNumber": "•••••••••0276",\n  "employerName": "•••••••••"\n}',
+  },
+  {
+    time: '30 Sep 08:55:20', user: 'svc_screening_mie', method: 'POST /v2/verify/address', product: 'Address Verification', productId: 404, ref: 'SCR-5530',
+    tone: 'green', status: 'Success', group: 'success', title: 'Address verified',
+    what: 'The address matched a record on file with an addressMatch score of 0.91.',
+    steps: ['No action needed.'],
+    request: '{\n  "idNumber": "•••••••••0519",\n  "address": "•••••••••••••••"\n}',
+  },
+  {
+    time: '30 Sep 08:40:02', user: 'svc_onboarding_mie', method: 'GET /v2/sessions/current', product: 'Sign-in', ref: 'None',
+    tone: 'green', status: 'Success', group: 'success', title: 'Session valid',
+    what: 'The session token issued at 20:40 the previous day was checked and is valid. It expires 12 hours after it was issued.',
+    steps: ['No action needed.'],
+    request: '{\n  "Authorization": "Bearer ••••••••"\n}',
+  },
+];
+export const PRODUCTS_MIE = ['Document Verification', 'Address Verification', 'Employment Verification'];
+export const TOTAL_EVENTS_MIE = 941;

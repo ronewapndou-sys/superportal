@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useBusiness } from '@/lib/business';
 import { useChat } from '../../../chat';
 import { PageHeader } from '../../../shell/PageHeader';
 import { Pill, useModal, useToast } from '../../../ui';
-import { CATALOGUE, CHECKLIST, INITIAL_INTEGRATIONS, STATUS_PILL, type Integration } from './data';
+import { CATALOGUE, CHECKLIST, INITIAL_INTEGRATIONS, INITIAL_INTEGRATIONS_MIE, STATUS_PILL, type Integration } from './data';
 import '../support.css';
 
 type Tab = 'all' | 'connected' | 'issues' | 'not-connected';
@@ -27,12 +28,17 @@ export function IntegrationsPage() {
   const toast = useToast();
   const modal = useModal();
   const chat = useChat();
-  const [rows, setRows] = useState<Integration[]>(INITIAL_INTEGRATIONS);
+  const business = useBusiness();
+  const defaultRows = business === 'mie' ? INITIAL_INTEGRATIONS_MIE : INITIAL_INTEGRATIONS;
+  const [rows, setRows] = useState<Integration[]>(defaultRows);
   // Bumping a row's counter remounts it, which replays the highlight animation.
   const [flash, setFlash] = useState<Record<string, number>>({});
   const [ticked, setTicked] = useState<boolean[]>(CHECKLIST.map(() => false));
   const [tab, setTab] = useState<Tab>('all');
   const [query, setQuery] = useState('');
+
+  // Switching XDS/MIE in the top bar shows that business's own integrations.
+  useEffect(() => setRows(defaultRows), [business]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const update = (id: string, changes: Partial<Integration>) => {
     setRows((rs) => rs.map((r) => (r.id === id ? { ...r, ...changes } : r)));
@@ -66,22 +72,26 @@ export function IntegrationsPage() {
       ],
     });
 
-  const viewError = (row: Integration) =>
-    modal.open({
-      title: 'Monitoring triggers are failing',
+  const viewError = (row: Integration) => {
+    const isWebhooks = row.id === 'mie-webhooks';
+    const endpoint = isWebhooks ? 'https://api.absa.example/mie/webhooks' : 'https://api.absa.example/xds/triggers';
+    const noun = isWebhooks ? 'webhook deliveries' : 'triggers';
+    return modal.open({
+      title: `${row.name} are failing`,
       body: (
         <>
-          <p>3 triggers (default alerts for consumers you monitor) couldn't be delivered because your endpoint returned <span className="code">503 Service Unavailable</span>. Delivery is retried for 24 hours.</p>
-          <p className="note-box">Last attempt: 29 Sep 2026, 23:10 · https://api.absa.example/xds/triggers</p>
-          <p className="muted" style={{ marginTop: 12 }}>Check that your endpoint is running, then send a test trigger.</p>
+          <p>3 {noun} ({isWebhooks ? 'verification results ready for collection' : 'default alerts for consumers you monitor'}) couldn't be delivered because your endpoint returned <span className="code">503 Service Unavailable</span>. Delivery is retried for 24 hours.</p>
+          <p className="note-box">Last attempt: 29 Sep 2026, 23:10 · {endpoint}</p>
+          <p className="muted" style={{ marginTop: 12 }}>Check that your endpoint is running, then send a test {isWebhooks ? 'webhook' : 'trigger'}.</p>
         </>
       ),
       actions: [
-        { label: 'Log a ticket', onClick: () => chat.startTicket({ subject: 'Monitoring triggers are failing', area: 'Integrations' }) },
-        { label: 'Ask the assistant', onClick: () => chat.ask('Why are my monitoring triggers failing?') },
-        { label: 'Send test trigger', kind: 'primary', onClick: () => connect(row, 'Testing') },
+        { label: 'Log a ticket', onClick: () => chat.startTicket({ subject: `${row.name} are failing`, area: 'Integrations' }) },
+        { label: 'Ask the assistant', onClick: () => chat.ask(`Why is ${row.name} failing?`) },
+        { label: `Send test ${isWebhooks ? 'webhook' : 'trigger'}`, kind: 'primary', onClick: () => connect(row, 'Testing') },
       ],
     });
+  };
 
   const review = (row: Integration) =>
     modal.open({

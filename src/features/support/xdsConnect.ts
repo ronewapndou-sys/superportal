@@ -9,6 +9,7 @@ export const XDS_CONNECT = {
   productionUrl: 'https://www.web.xds.co.za/xdsconnect/XDSConnectWS.asmx',
   uatUrl: 'https://www.uat.xds.co.za/xdsconnect/XDSConnectWS.asmx',
   ticketHours: 5,
+  tokenNoun: 'ticket',
   supportPhone: '+27 11 645 9100',
   supportEmail: 'info@xds.co.za',
 };
