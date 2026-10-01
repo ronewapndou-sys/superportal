@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useBusiness } from '@/lib/business';
 import { useChat } from '../../chat';
 import { PageHeader } from '../../shell/PageHeader';
 import { BarList, CHART_BLUE, CHART_RED, Pill, StackedColumns, TableToggle, useModal, useToast } from '../../ui';
@@ -7,17 +8,23 @@ import { ALERT_RULES, CLIENT_HOURLY, CLIENT_SERVICE_IDS, FAILURE_REASONS, INCIDE
 import './monitoring.css';
 
 const hours = TODAY_HOURS;
-const success = CLIENT_HOURLY.reduce((a, [s]) => a + s, 0);
-const failed = CLIENT_HOURLY.reduce((a, [, f]) => a + f, 0);
 
 export function ClientMonitoringPage() {
   const toast = useToast();
   const modal = useModal();
   const chat = useChat();
+  const business = useBusiness();
   const [rules, setRules] = useState<AlertRule[]>(ALERT_RULES);
 
-  const myServices = SERVICES.filter((s) => CLIENT_SERVICE_IDS.includes(s.id));
-  const myIncidents = INCIDENTS.filter((i) => i.status !== 'resolved' && CLIENT_SERVICE_IDS.includes(i.serviceId));
+  const serviceIds = CLIENT_SERVICE_IDS[business];
+  const hourly = CLIENT_HOURLY[business];
+  const failureReasons = FAILURE_REASONS[business];
+  const mainService = SERVICES.find((s) => s.id === serviceIds[0]);
+  const success = hourly.reduce((a, [s]) => a + s, 0);
+  const failed = hourly.reduce((a, [, f]) => a + f, 0);
+
+  const myServices = SERVICES.filter((s) => serviceIds.includes(s.id));
+  const myIncidents = INCIDENTS.filter((i) => i.status !== 'resolved' && serviceIds.includes(i.serviceId));
   const successRate = ((success / (success + failed)) * 100).toFixed(1);
 
   const toggle = (id: string) => {
@@ -78,7 +85,7 @@ export function ClientMonitoringPage() {
     <>
       <PageHeader
         title="Monitoring"
-        description="How your organisation's connections to XDS are performing today, and the alerts you've set up."
+        description={`How your organisation's connections to ${business === 'mie' ? 'MIE' : 'XDS'} are performing today, and the alerts you've set up.`}
         actions={
           <>
             <Link className="btn" to="/support/activity">Open activity log</Link>
@@ -111,8 +118,8 @@ export function ClientMonitoringPage() {
         </div>
         <div className="card stat-static">
           <div className="label">p95 response time</div>
-          <div className="value">740 ms</div>
-          <div className="note">XDS Connect Production</div>
+          <div className="value">{mainService?.p95Ms} ms</div>
+          <div className="note">{mainService?.name}</div>
         </div>
         <div className="card stat-static">
           <div className="label">Alerts fired today</div>
@@ -126,17 +133,17 @@ export function ClientMonitoringPage() {
           <div className="card-head">
             <div className="card-title">
               <h2>Calls per hour today</h2>
-              <span className="card-sub">All products · XDS Connect Production</span>
+              <span className="card-sub">All products · {mainService?.name}</span>
             </div>
           </div>
           <div className="card-body">
             <StackedColumns
               labels={hours}
               series={[{ name: 'Successful', color: CHART_BLUE }, { name: 'Failed', color: CHART_RED }]}
-              values={CLIENT_HOURLY}
+              values={hourly}
               label="Successful and failed calls per hour today"
             />
-            <TableToggle columns={['Hour', 'Successful', 'Failed']} rows={hours.map((h, i) => [h, CLIENT_HOURLY[i][0], CLIENT_HOURLY[i][1]])} />
+            <TableToggle columns={['Hour', 'Successful', 'Failed']} rows={hours.map((h, i) => [h, hourly[i][0], hourly[i][1]])} />
           </div>
         </section>
 
@@ -148,7 +155,7 @@ export function ClientMonitoringPage() {
             </div>
           </div>
           <div className="card-body">
-            <BarList items={FAILURE_REASONS} unit="failed calls" />
+            <BarList items={failureReasons} unit="failed calls" />
             <button className="btn" type="button" style={{ marginTop: 18 }} onClick={() => chat.ask('My ticket expired')}>How do I fix expired tickets?</button>
           </div>
         </section>

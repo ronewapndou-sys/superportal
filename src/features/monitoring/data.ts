@@ -1,3 +1,4 @@
+import type { Business } from '@/lib/api/types';
 import type { PillTone } from '../../ui';
 
 /**
@@ -112,20 +113,35 @@ export const CLIENTS = [
 
 /* ---------- The signed-in client's own numbers (ABSA) ---------- */
 
-/** Services this client uses, by platform service id. */
-export const CLIENT_SERVICE_IDS = ['xds-connect', 'xds-uat', 'xds-credit', 'xds-dovs', 'xds-idv', 'xds-triggers'];
+/** Services this client uses, by platform service id, per business. */
+export const CLIENT_SERVICE_IDS: Record<Business, string[]> = {
+  xds: ['xds-connect', 'xds-uat', 'xds-credit', 'xds-dovs', 'xds-idv', 'xds-triggers'],
+  mie: ['mie-api', 'mie-portal'],
+};
 
 /** Calls per hour today: [successful, failed], 00:00 to now (11:00). */
-export const CLIENT_HOURLY: [number, number][] = [
-  [12, 0], [6, 0], [4, 0], [3, 0], [5, 0], [22, 9], [96, 3], [214, 5], [388, 7], [512, 12], [604, 31], [388, 4],
-];
+export const CLIENT_HOURLY: Record<Business, [number, number][]> = {
+  xds: [
+    [12, 0], [6, 0], [4, 0], [3, 0], [5, 0], [22, 9], [96, 3], [214, 5], [388, 7], [512, 12], [604, 31], [388, 4],
+  ],
+  mie: [
+    [3, 0], [1, 0], [1, 0], [0, 0], [1, 0], [6, 1], [24, 1], [58, 2], [94, 3], [131, 4], [162, 6], [101, 2],
+  ],
+};
 
-export const FAILURE_REASONS = [
-  { label: 'Ticket no longer valid', value: 41 },
-  { label: 'No consumer found', value: 18 },
-  { label: 'Liveness check failed', value: 9 },
-  { label: 'Login failed', value: 3 },
-];
+export const FAILURE_REASONS: Record<Business, { label: string; value: number }[]> = {
+  xds: [
+    { label: 'Ticket no longer valid', value: 41 },
+    { label: 'No consumer found', value: 18 },
+    { label: 'Liveness check failed', value: 9 },
+    { label: 'Login failed', value: 3 },
+  ],
+  mie: [
+    { label: 'Document mismatch', value: 7 },
+    { label: 'Invalid input', value: 4 },
+    { label: 'Verification timed out', value: 2 },
+  ],
+};
 
 export type AlertRule = { id: string; name: string; condition: string; channel: string; on: boolean; lastFired: string };
 
