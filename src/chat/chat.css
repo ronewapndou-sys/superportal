@@ -37,6 +37,14 @@
 /* Keep the assistant clear of an open side panel. */
 body[data-drawer='open'] .chat-fab, body[data-drawer='open'] .chat { right: 468px; }
 
+@media (max-width: 600px) {
+  .chat-fab { right: 16px; bottom: 16px; }
+  .chat { right: 12px; left: 12px; width: auto; bottom: 80px; height: min(72vh, calc(100vh - 104px)); }
+  /* The drawer is full-width below the tablet breakpoint, so there is no side panel to clear. */
+  body[data-drawer='open'] .chat-fab, body[data-drawer='open'] .chat { right: 16px; }
+  body[data-drawer='open'] .chat { right: 12px; }
+}
+
 /* Support tickets inside the chat */
 .msg.wide { max-width: 100%; width: 100%; padding: 14px; }
 .ticket-form-title { font-size: 14px; font-weight: 600; color: var(--mt-text); }

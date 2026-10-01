@@ -30,3 +30,8 @@
 .drawer .note-box { margin: 0 0 16px; }
 .so-top, .so-queues { display: flex; width: fit-content; max-width: 100%; overflow-x: auto; }
 .so-top { margin-bottom: 12px; }
+
+@media (max-width: 600px) {
+  .so-two { grid-template-columns: 1fr; }
+  .so-pager { flex-wrap: wrap; gap: 8px; }
+}

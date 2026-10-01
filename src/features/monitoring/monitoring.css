@@ -31,3 +31,11 @@
 .switch span { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--mt-card-bg); transition: transform 150ms var(--mt-ease); }
 .switch[aria-checked='true'] { background: var(--mt-blue); }
 .switch[aria-checked='true'] span { transform: translateX(18px); }
+
+@media (max-width: 880px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .two-col, .two-col.wide-left { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .stats { grid-template-columns: 1fr; }
+}

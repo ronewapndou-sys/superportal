@@ -119,3 +119,18 @@
 .login-card .acct:nth-child(2) { --ai: 1; }
 .login-card .acct:nth-child(3) { --ai: 2; }
 .login-card .acct:nth-child(4) { --ai: 3; }
+
+/* Below the breakpoint the brand panel would need to shrink past where its animation (sized off
+   its own box by CircuitTraces) still reads cleanly, so the form takes the full screen instead. */
+@media (max-width: 760px) {
+  .login { grid-template-columns: 1fr; min-height: 100vh; }
+  .login-hero { display: none; }
+  .login-main { min-height: 100vh; padding: 32px 20px 24px; }
+}
+@media (max-width: 380px) {
+  .accts { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .login-legal { flex-wrap: wrap; gap: 8px 18px; margin-top: 28px; }
+  .login-card h1 { font-size: 26px; }
+}

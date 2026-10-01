@@ -17,6 +17,9 @@
 .table th { text-align: left; font-size: 12px; font-weight: 500; color: var(--mt-sharkskin); background: var(--mt-page-bg); padding: 9px 20px; border-bottom: 1px solid var(--mt-border); }
 .table td { padding: 10px 20px; border-bottom: 1px solid var(--mt-subtle-bg); vertical-align: middle; font-size: 13px; }
 .table tr.selected td { background: var(--mt-tint); }
+/* Wide tables scroll horizontally on narrow screens instead of squeezing columns or overflowing the page. Matches whatever actually wraps the table (a card, a card-body, a plain div), so no page needs its own wrapper markup. */
+*:has(> table.table) { overflow-x: auto; }
+@media (max-width: 600px) { .table th, .table td { padding: 9px 14px; } }
 
 /* Status labels: one uniform neutral box; only the text carries the status colour.
    Text uses darker steps of the semantic colours so it passes 4.5:1 on white. */
@@ -65,8 +68,8 @@
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 /* Modal */
-.scrim { position: fixed; inset: 0; background: var(--mt-scrim); display: flex; align-items: center; justify-content: center; z-index: 50; }
-.modal { width: 480px; background: var(--mt-card-bg); border: 1px solid var(--mt-border); border-radius: var(--mt-radius-panel); box-shadow: var(--mt-shadow-modal); animation: mt-pop 0.2s var(--mt-ease); }
+.scrim { position: fixed; inset: 0; background: var(--mt-scrim); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+.modal { width: 480px; max-width: 100%; max-height: calc(100vh - 32px); overflow-y: auto; background: var(--mt-card-bg); border: 1px solid var(--mt-border); border-radius: var(--mt-radius-panel); box-shadow: var(--mt-shadow-modal); animation: mt-pop 0.2s var(--mt-ease); }
 .modal-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--mt-border); }
 .modal-head h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
 .modal-body { padding: 16px 20px; }
@@ -104,7 +107,7 @@
 .banner-text { font-size: 13px; color: var(--mt-sharkskin); }
 
 /* Side panel (drawer) */
-.drawer { position: fixed; top: 56px; right: 0; bottom: 0; width: 440px; background: var(--mt-card-bg); border-left: 1px solid var(--mt-border); box-shadow: var(--mt-shadow-card-hover); z-index: 35; display: flex; flex-direction: column; animation: mt-slide 0.22s var(--mt-ease); }
+.drawer { position: fixed; top: 56px; right: 0; bottom: 0; width: 440px; max-width: 100vw; background: var(--mt-card-bg); border-left: 1px solid var(--mt-border); box-shadow: var(--mt-shadow-card-hover); z-index: 35; display: flex; flex-direction: column; animation: mt-slide 0.22s var(--mt-ease); }
 @keyframes mt-slide { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
 .drawer-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 20px 24px 16px; border-bottom: 1px solid var(--mt-border); }
 .drawer-head h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; line-height: 1.3; }
@@ -119,3 +122,24 @@
 
 /* Keyboard focus */
 :where(button, a, input, select, [tabindex]):focus-visible { outline: 2px solid var(--mt-blue); outline-offset: 2px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  /* The +124px offset centers the toast in the content column next to a 248px desktop sidebar; there is no sidebar on this breakpoint. */
+  .toast { left: 50%; max-width: calc(100vw - 32px); }
+  .drawer { top: 0; }
+}
+
+@media (max-width: 600px) {
+  .card-head { flex-wrap: wrap; gap: 10px; padding: 14px 16px; }
+  .card-body { padding: 14px 16px; }
+  .card-foot { padding: 10px 16px; }
+  .toolbar { flex-wrap: wrap; padding: 10px 16px; }
+  .search, .search .field { width: 100%; }
+  .modal-head, .modal-body, .modal-foot { padding-left: 16px; padding-right: 16px; }
+  .modal-foot { flex-wrap: wrap; }
+  .modal-foot .btn { flex: 1 1 auto; }
+  .drawer-head, .drawer-body, .drawer-foot { padding-left: 16px; padding-right: 16px; }
+  .kv { grid-template-columns: 100px 1fr; }
+  .banner { flex-wrap: wrap; padding: 12px 14px; }
+}

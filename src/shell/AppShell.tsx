@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { ChatProvider, ChatWidget } from '../chat';
@@ -22,6 +23,9 @@ export function AppShell() {
   const nav = findNav(pathname);
   const page = nav?.item.label ?? 'Home';
   const { user } = useAuth();
+  // The sidebar is an off-canvas drawer below the tablet breakpoint; close it whenever the route changes.
+  const [navOpen, setNavOpen] = useState(false);
+  useEffect(() => setNavOpen(false), [pathname]);
 
   return (
     <CxoSession key={user?.email}>
@@ -32,9 +36,9 @@ export function AppShell() {
             <FpzProvider>
               <ChatProvider startOpen={params.get('assistant') === 'open'}>
                 <div className="app">
-                  <Sidebar />
+                  <Sidebar open={navOpen} onClose={() => setNavOpen(false)} />
                   <div className="app-main">
-                    <Topbar section={nav?.section.heading ?? 'Portal'} page={page} />
+                    <Topbar section={nav?.section.heading ?? 'Portal'} page={page} onMenu={() => setNavOpen(true)} />
                     <main className="main" id="main">
                       <div className="page-enter" key={pathname}>
                         <Outlet />

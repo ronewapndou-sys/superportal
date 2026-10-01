@@ -71,3 +71,11 @@ button.ep:hover { background: var(--mt-page-bg); }
 
 .lookup-empty { padding: 20px; color: var(--mt-sharkskin); font-size: 13px; }
 .lookup-more { padding: 10px 20px 14px; color: var(--mt-sharkskin); font-size: 12px; border-top: 1px solid var(--mt-subtle-bg); }
+
+@media (max-width: 880px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .two-col { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .stats { grid-template-columns: 1fr; }
+}

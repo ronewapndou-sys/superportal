@@ -1,5 +1,5 @@
-/* Full-window layout: fixed-width sidebar, fluid content column. */
-.app { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100vh; min-width: 1100px; }
+/* Full-window layout: fixed-width sidebar, fluid content column. Below the tablet breakpoint the sidebar becomes an off-canvas drawer (see the media query at the bottom), so there is no minimum width down there. */
+.app { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100vh; }
 .app-main { display: flex; flex-direction: column; min-width: 0; }
 
 /* Sidebar: the style guide's navbar treatment (navy, Mettus Blue edge, white nav buttons). */
@@ -9,6 +9,7 @@
 .logo img { width: 30px; height: auto; display: block; }
 .brand-name { font-weight: 700; font-size: 17px; line-height: 1.15; letter-spacing: -0.3px; }
 .brand-sub { font-size: 12px; color: var(--mt-steel); line-height: 1.3; }
+.sidebar-close, .sidebar-scrim, .nav-toggle { display: none; }
 .nav { display: flex; flex-direction: column; gap: 4px; }
 .nav-section { padding-top: 12px; }
 .nav-h { font-size: 12px; font-weight: 500; color: var(--mt-steel); padding: 0 10px 6px; }
@@ -90,3 +91,49 @@
 .division-btn .k { flex: none; color: var(--mt-sharkskin); font-weight: 500; }
 .division-btn .v { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
 @media (max-width: 1100px) { .division-btn .k { display: none; } .breadcrumb { display: none; } }
+
+/* ---------- Responsive: tablet and phone ---------- */
+
+/* Tablet and below: the sidebar becomes an off-canvas drawer behind a hamburger button. */
+@media (max-width: 880px) {
+  .app { grid-template-columns: 1fr; }
+
+  .nav-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; flex: none; border: 1px solid var(--mt-border); border-radius: var(--mt-radius-control); background: var(--mt-card-bg); color: var(--mt-text); cursor: pointer; }
+  .nav-toggle:hover { background: var(--mt-page-bg); }
+
+  .sidebar { position: fixed; inset: 0 auto 0 0; z-index: 70; width: 272px; max-width: 86vw; transform: translateX(-100%); transition: transform 220ms var(--mt-ease); box-shadow: var(--mt-shadow-modal); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-close { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; margin-left: auto; border: 0; border-radius: var(--mt-radius-control); background: rgba(255, 255, 255, 0.1); color: #fff; cursor: pointer; flex: none; }
+  .sidebar-close:hover { background: rgba(255, 255, 255, 0.18); }
+  .sidebar-scrim { display: block; position: fixed; inset: 0; z-index: 65; background: var(--mt-scrim); animation: mt-fade 180ms var(--mt-ease); }
+  @keyframes mt-fade { from { opacity: 0; } to { opacity: 1; } }
+
+  .topbar { padding: 0 14px; gap: 10px; }
+  .topbar-left { gap: 10px; min-width: 0; flex: 1; }
+  .ctx { padding-right: 10px; gap: 8px; min-width: 0; }
+  .division { min-width: 0; }
+  .division-btn { max-width: 140px; }
+  .top-right { gap: 6px; }
+  .account-name { display: none; }
+  .top-btn { padding: 0 10px; }
+
+  .main { padding: 18px 16px 96px; }
+  .page-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .page-header h1 { font-size: 24px; }
+  .page-actions { flex-wrap: wrap; width: 100%; }
+
+  .bell-panel { width: calc(100vw - 28px); right: -4px; }
+  .menu { right: 14px; }
+}
+
+@media (min-width: 881px) {
+  .nav-toggle, .sidebar-close, .sidebar-scrim { display: none; }
+}
+
+/* Phone: tighten further and stack anything still side-by-side. */
+@media (max-width: 600px) {
+  .main { padding: 14px 12px 88px; }
+  .page-header h1 { font-size: 21px; }
+  .page-actions { gap: 6px; }
+  .page-actions .btn { flex: 1 1 auto; }
+}

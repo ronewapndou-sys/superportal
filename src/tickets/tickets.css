@@ -47,3 +47,18 @@
 .nt-grid .form-row + .form-row { margin-top: 0; }
 .nt-area { height: auto !important; padding: 8px 10px; font: inherit; resize: vertical; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 880px) {
+  .tk-layout { grid-template-columns: 1fr; }
+  .tk-list ul { max-height: 320px; }
+  .tk-thread { min-height: 0; }
+  .tk-messages { max-height: 420px; }
+  .nt-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .tk-thread-head { flex-direction: column; gap: 10px; padding: 16px; }
+  .tk-thread-actions { flex-wrap: wrap; }
+  .tk-messages { padding: 8px 16px; }
+  .tk-compose { padding: 14px 16px 16px; }
+  .tk-compose-foot { flex-wrap: wrap; gap: 10px; }
+}

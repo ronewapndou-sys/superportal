@@ -9,7 +9,7 @@ import { ContextBar } from './ContextBar';
 import { NotificationBell } from './NotificationBell';
 
 /** Slim utility bar: where you are on the left, help and account on the right. Page titles live in <PageHeader>. */
-export function Topbar({ section, page }: { section: string; page: string }) {
+export function Topbar({ section, page, onMenu }: { section: string; page: string; onMenu: () => void }) {
   const chat = useChat();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
@@ -35,6 +35,9 @@ export function Topbar({ section, page }: { section: string; page: string }) {
   return (
     <header className="topbar">
       <div className="topbar-left">
+      <button className="nav-toggle" type="button" aria-label="Open menu" onClick={onMenu}>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" /></svg>
+      </button>
       <ContextBar />
       <nav className="breadcrumb" aria-label="Breadcrumb">
         <span>{section}</span>

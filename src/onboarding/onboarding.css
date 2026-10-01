@@ -25,3 +25,11 @@
 .ob-done { text-align: left; }
 .ob-done h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
 .ob-done p + p { margin-top: 10px; }
+
+@media (max-width: 600px) {
+  .ob-card { padding: 20px 18px 16px; }
+  .ob-two { grid-template-columns: 1fr; }
+  .ob-steps { flex-wrap: wrap; }
+  .ob-review { grid-template-columns: 96px 1fr; }
+  .ob-actions { flex-wrap: wrap; }
+}

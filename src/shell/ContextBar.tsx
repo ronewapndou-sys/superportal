@@ -71,7 +71,7 @@ function DivisionSwitch() {
         <span className="v">{branch.name}</span>
         <Icon.ChevronDown className="h-4 w-4 shrink-0 text-muted" />
       </button>
-      <Popover open={open} onClose={() => setOpen(false)} anchorRef={ref} align="left" className="w-80 p-2">
+      <Popover open={open} onClose={() => setOpen(false)} anchorRef={ref} align="left" className="w-80 max-w-[calc(100vw-2rem)] p-2">
         <p className="px-3 pt-2 pb-2 text-xs text-muted">Choose the division you&apos;re working in. Products change to match its access.</p>
         <ul role="listbox" aria-label="Your divisions">
           {myBranches.map((b) => {
